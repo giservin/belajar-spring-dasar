@@ -1,15 +1,26 @@
 pipeline {
-    agent {
-        node {
-            label "master"
-        }
-    }
+    agent any 
 
     stages {
         stage('Hello') {
             steps {
-                sh "mkdir /home/giservin2000/pipeline-folder"
+                echo "hello world"
             }
+        }
+    }
+
+    post {
+        always {
+            echo "Hello again"
+        }
+        success {
+            echo "Success"
+        }
+        failure {
+            echo "failure!"
+        }
+        cleanup {
+            echo "Testes"
         }
     }
 }
