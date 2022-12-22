@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-                mkdir /home/giservin2000/pipeline-folder
+                sh "mkdir /home/giservin2000/pipeline-folder"
             }
         }
     }
