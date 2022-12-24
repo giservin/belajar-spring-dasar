@@ -1,50 +1,26 @@
 pipeline {
-    agent{
-        node {
-            label "agent-one"
-        }
-    }
+    agent none
 
     stages {
-        stage('Build') {
-            steps {
-                script {
-                    for(int i=0; i<10; i++) {
-                        echo "Script ke-${i}"
-                    }
+        stage("Build") {
+            agent {
+                node {
+                    label "master"
                 }
             }
-        }
-        stage('Test') {
             steps {
-                script {
-                    def data = [
-                        "firstName": "Eko",
-                        "lastName" : "Khannedy"
-                    ]
-                    writeJSON(file: "data.json", json: data)
+                echo "Build"
+            }
+        }
+        stage("Deploy") {
+            agent {
+                node {
+                    label "agent-one"
                 }
             }
-        }
-        stage('Deploy') {
             steps {
-                echo "hello Deploy"
+                echo "Deploy"
             }
-        }
-    }
-
-    post {
-        always {
-            echo "Hello again"
-        }
-        success {
-            echo "Success"
-        }
-        failure {
-            echo "failure!"
-        }
-        cleanup {
-            echo "Testes"
         }
     }
 }
