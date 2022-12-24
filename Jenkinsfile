@@ -13,11 +13,13 @@ pipeline {
         }
         stage('Test') {
             steps {
-                def data = [
-                    "firstName": "Eko",
-                    "lastName" : "Khannedy"
-                ]
-                writeJSON(file: "data.json", json: data)
+                script {
+                    def data = [
+                        "firstName": "Eko",
+                        "lastName" : "Khannedy"
+                    ]
+                    writeJSON(file: "data.json", json: data)
+                }
             }
         }
         stage('Deploy') {
