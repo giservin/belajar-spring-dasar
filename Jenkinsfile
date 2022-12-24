@@ -13,8 +13,11 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo "hello Test"
-                sleep(2)
+                def data = [
+                    "firstName": "Eko",
+                    "lastName" : "Khannedy"
+                ]
+                writeJSON(file: "data.json", json: data)
             }
         }
         stage('Deploy') {
