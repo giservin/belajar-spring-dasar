@@ -4,9 +4,11 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "hello Build"
-                sleep(5)
-                echo "hello kedua"
+                script {
+                    for(int i=0; i<10; i++) {
+                        echo "Script ke-${i}"
+                    }
+                }
             }
         }
         stage('Test') {
