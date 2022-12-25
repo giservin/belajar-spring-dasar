@@ -9,7 +9,9 @@ pipeline {
                 }
             }
             steps {
-                echo "Build"
+                echo "Start Job : ${env.JOB_NAME}"
+                echo "Start Build : ${env.BUILD_NUMBER}"
+                echo "Build Name : ${env.BRANCH_NAME}"
             }
         }
         stage("Deploy") {
