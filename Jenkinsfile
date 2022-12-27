@@ -7,6 +7,11 @@ pipeline {
         DB_SERVER = "localhost"
     }
 
+    options {
+        disableConcurrentBuilds()
+        timeout(time: 10, unit: 'SECONDS')
+    }
+
     stages {
         stage("Build") {
             agent {
@@ -22,7 +27,9 @@ pipeline {
                 echo "Start Build : ${env.BUILD_NUMBER}"
                 echo "Build Name : ${env.BRANCH_NAME}"
                 echo "Username : ${APP_USR}"
+                // echo "Password : ${APP_PSW}"
                 sh 'echo "App Password : $APP_PSW" > password.txt'
+                sleep(10)
             }
         }
         stage("Deploy") {
