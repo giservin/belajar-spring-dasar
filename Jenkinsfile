@@ -44,7 +44,7 @@ pipeline {
         }
     }
     
-    retention {
-        builds(10)
-    }
+    properties([
+        buildDiscarder(logRotator(numToKeepStr: '10')),
+    ])
 }
