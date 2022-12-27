@@ -10,6 +10,10 @@ pipeline {
     triggers {
         githubPush()
     }
+    
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
 
     stages {
         stage("Build") {
@@ -44,7 +48,4 @@ pipeline {
         }
     }
     
-    properties([
-        buildDiscarder(logRotator(numToKeepStr: '10')),
-    ])
 }
