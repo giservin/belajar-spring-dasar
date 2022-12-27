@@ -7,8 +7,8 @@ pipeline {
         DB_SERVER = "localhost"
     }
 
-    parameters {
-        booleanParam(name: "DEPLOY", defaultValue: false, description: "Deploy confirmation")
+    triggers {
+        github(repo: 'belajar-spring-dasar')
     }
 
     stages {
@@ -31,11 +31,6 @@ pipeline {
             }
         }
         stage("Deploy") {
-            when {
-                expression {
-                    return params.DEPLOY
-                }
-            }
             agent {
                 node {
                     label "agent-one"
