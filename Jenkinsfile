@@ -43,4 +43,8 @@ pipeline {
             }
         }
     }
+    
+    retention {
+        builds(10)
+    }
 }
