@@ -7,6 +7,10 @@ pipeline {
         DB_SERVER = "localhost"
     }
 
+    parameters {
+        booleanParam(name: "DEPLOY", defaultValue: false, description: "Deploy confirmation")
+    }
+
     stages {
         stage("Build") {
             agent {
@@ -27,12 +31,9 @@ pipeline {
             }
         }
         stage("Deploy") {
-            input {
-                message "Can we deploy?"
-                ok "yes, of course"
-                submitter "giservintz,abirafdi"
-                parameters {
-                    choice name: "ENVIRONMENT", choices: ["Dev", "Test", "Prod"], description: "Environment for deploying this project"
+            when {
+                expression {
+                    return params.DEPLOY
                 }
             }
             agent {
@@ -44,7 +45,6 @@ pipeline {
                 echo "Author : ${AUTHOR}"
                 echo "Email : ${EMAIL}"
                 echo "DB Host : ${DB_SERVER}"
-                echo "This project is being deployed in ${ENVIRONMENT}"
             }
         }
     }
