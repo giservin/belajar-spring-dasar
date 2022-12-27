@@ -7,35 +7,7 @@ pipeline {
         DB_SERVER = "localhost"
     }
 
-    parameters {
-        string(name: "NAME", defaultValue: "Guest", description: "What's your name")
-        text(name: "DESCRIPTION", defaultValue: "Guest", description: "Describe yourself")
-        booleanParam(name: "DEPLOY", defaultValue: false, description: "Deploy gak?")
-        choice(name: "SOCIAL_MEDIA", choices: ['Instagram', 'Facebook', 'Twitter'], description: "Which Social Media?")
-        password(name: "SECRET", defaultValue: "", description: "Encrypt Key")
-    }
-
-    options {
-        disableConcurrentBuilds()
-        timeout(time: 10, unit: 'SECONDS')
-    }
-
     stages {
-        stage("Parameter") {
-            agent {
-                node {
-                    label "master"
-                }
-            }
-
-            steps {
-                echo "HELLO ${params.NAME}!"
-                echo "You are ${params.DESCRIPTION}!"
-                echo "HELLO ${params.SOCIAL_MEDIA} user!"
-                echo "Need to deploy: ${params.DEPLOY}!"
-                sh 'echo "this is your password : $params.SECRET"'
-            }
-        }
         stage("Build") {
             agent {
                 node {
@@ -55,6 +27,14 @@ pipeline {
             }
         }
         stage("Deploy") {
+            input {
+                message "Can we deploy?"
+                ok "yes, of course"
+                submitter "giservintz,abirafdi"
+                parameters {
+                    choice name: "ENVIRONMENT", choices: ["Dev", "Test", "Prod"], description: "Environment for deploying this project"
+                }
+            }
             agent {
                 node {
                     label "agent-one"
@@ -64,6 +44,7 @@ pipeline {
                 echo "Author : ${AUTHOR}"
                 echo "Email : ${EMAIL}"
                 echo "DB Host : ${DB_SERVER}"
+                echo "This project is being deployed in ${ENVIRONMENT}"
             }
         }
     }
