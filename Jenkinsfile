@@ -8,7 +8,7 @@ pipeline {
     }
 
     triggers {
-        github(repo: 'belajar-spring-dasar')
+        github()
     }
 
     stages {
