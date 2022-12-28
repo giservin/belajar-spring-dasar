@@ -16,6 +16,25 @@ pipeline {
     }
 
     stages {
+        stage("Preparation") {
+            agent {
+                node {
+                    label "master"
+                }
+            }
+            stages {
+                stage("Prepare Java") {
+                    steps {
+                        echo "Prepare Java"
+                    }
+                }
+                stage("Prepare Maven") {
+                    steps {
+                        echo "Prepare Maven"
+                    }
+                }
+            }
+        }
         stage("Build") {
             agent {
                 node {
