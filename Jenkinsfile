@@ -17,7 +17,7 @@ pipeline {
 
     stages {
         stage("Preparation") {
-            // failFast true
+            failFast true
             parallel {
                 stage("Prepare Java") {
                     agent {
