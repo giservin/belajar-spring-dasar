@@ -17,7 +17,7 @@ pipeline {
 
     stages {
         stage("Preparation") {
-            // failFast true
+            failFast true
             parallel {
                 stage("Prepare Java") {
                     agent {
@@ -33,7 +33,7 @@ pipeline {
                 stage("Prepare Maven") {
                     agent {
                         node {
-                            label "master"
+                            label "agent-one"
                         }
                     }
                     steps {
