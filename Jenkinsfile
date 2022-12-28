@@ -26,7 +26,7 @@ pipeline {
                         }
                     }
                     steps {
-                        echo "Prepare Java"
+                        echo "Prepare Java
                         sleep(5)
                     }
                 }
