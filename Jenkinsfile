@@ -67,7 +67,7 @@ pipeline {
             steps {
                 echo "Start Job : ${env.JOB_NAME}"
                 echo "Start Build : ${env.BUILD_NUMBER}"
-                echo "Build Name : ${env.BRANCH_NAME}"
+                echo "Branch Name : ${env.BRANCH_NAME}"
                 echo "Username : ${APP_USR}"
                 // echo "Password : ${APP_PSW}"
                 sh 'echo "App Password : $APP_PSW" > password.txt'
