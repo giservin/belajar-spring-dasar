@@ -18,27 +18,39 @@ pipeline {
     stages {
         stage("Preparation") {
             failFast true
-            parallel {
-                stage("Prepare Java") {
-                    agent {
-                        node {
-                            label "master"
-                        }
+            matrix {
+                axes {
+                    axis {
+                        name 'OS'
+                        values 'windows', 'linux', 'mac'
                     }
-                    steps {
-                        echo "Prepare Java"
-                        sleep(3)
+                    axis {
+                        name 'ARC'
+                        values 'x86', 'x64'
                     }
                 }
-                stage("Prepare Maven") {
-                    agent {
-                        node {
-                            label "agent-one"
+                excludes {
+                    exclude {
+                        axis {
+                            name 'OS'
+                            values 'mac'
+                        }
+                        axis {
+                            name 'ARC'
+                            values 'x86'
                         }
                     }
-                    steps {
-                        echo "Prepare Maven"
-                        sleep(5)
+                }
+                stages {
+                    stage("Prepare OS") {
+                        agent {
+                            node {
+                                label "master"
+                            }
+                        }
+                        steps {
+                            echo "Prepare ${OS} ${ARC}"
+                        }
                     }
                 }
             }
@@ -71,6 +83,12 @@ pipeline {
                 echo "Author : ${AUTHOR}"
                 echo "Email : ${EMAIL}"
                 echo "DB Host : ${DB_SERVER}"
+                withCredentials([usernamePassword(
+                    credentialsId: "username_rahasia", 
+                    usernameVariable: "USER", 
+                    passwordVariable: "PASSWORD")]) {
+                        sh 'echo "Releasing with user $USER and password $PASSWORD" > secret.txt'
+                    }
             }
         }
     }
