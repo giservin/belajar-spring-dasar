@@ -17,40 +17,28 @@ pipeline {
 
     stages {
         stage("Preparation") {
-            failFast true
-            matrix {
-                axes {
-                    axis {
-                        name 'OS'
-                        values 'windows', 'linux', 'mac'
-                    }
-                    axis {
-                        name 'ARC'
-                        values 'x86', 'x64'
-                    }
-                }
-                excludes {
-                    exclude {
-                        axis {
-                            name 'OS'
-                            values 'mac'
+            // failFast true
+            parallel {
+                stage("Prepare Java") {
+                    agent {
+                        node {
+                            label "master"
                         }
-                        axis {
-                            name 'ARC'
-                            values 'x86'
-                        }
+                    }
+                    steps {
+                        echo "Prepare Java"
+                        sleep(3)
                     }
                 }
-                stages {
-                    stage("Prepare OS") {
-                        agent {
-                            node {
-                                label "master"
-                            }
+                stage("Prepare Maven") {
+                    agent {
+                        node {
+                            label "master"
                         }
-                        steps {
-                            echo "Prepare ${OS} ${ARC}"
-                        }
+                    }
+                    steps {
+                        echo "Prepare Maven"
+                        sleep(5)
                     }
                 }
             }
