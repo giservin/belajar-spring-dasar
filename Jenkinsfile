@@ -27,7 +27,7 @@ pipeline {
                     }
                     steps {
                         echo "Prepare Java"
-                        sleep(3)
+                        sleep(5)
                     }
                 }
                 stage("Prepare Maven") {
