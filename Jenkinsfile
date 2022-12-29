@@ -1,3 +1,3 @@
 @Library("belajar-jenkins-shared-library@main") _
 
-mavenPipeline()
+truePipeline([type: "wrong"])
