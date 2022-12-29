@@ -4,6 +4,9 @@ import giservintz.jenkins.Output;
 
 pipeline {
     agent any
+    triggers {
+        githubPush()
+    }
     stages {
         stage("Hello World") {
             steps {
@@ -11,7 +14,7 @@ pipeline {
                     // memanggil file groovy (sesuai nama nya) di vars shared library , menggunakan fungsi nya 
                     hello.hello_world()
                     // memanggil class 
-                    Output.hello("Giservin Tifira Zain")
+                    Output.hello(this, "Giservin Tifira Zain")
                 }
             }
         }
