@@ -11,7 +11,7 @@ pipeline {
         stage("Hello World") {
             steps {
                 script {
-                    hello("Abirafdi")
+                    author("Abirafdi")
                     // memanggil file groovy (sesuai nama nya) di vars shared library , menggunakan fungsi nya 
                     hello.hello_world()
                     // memanggil class 
